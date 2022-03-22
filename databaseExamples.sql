@@ -1,3 +1,6 @@
+
+
+
 CREATE TABLE tours (
   id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   name varchar(50) NOT NULL,

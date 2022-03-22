@@ -8,34 +8,12 @@ import { readTour } from '../../util/database';
 
 const bodyStyle = css`
   background-color: rgb(163, 120, 87, 0.8);
-  /* background-image: linear-gradient(
-    to top,
-    #192e00,
-    #1c330e,
-    #203817,
-    #243d20,
-    #294229,
-    #28402b,
-    #283f2c,
-    #283d2d,
-    #223427,
-    #1d2c21,
-    #17231b,
-    #121b15
-  ); */
+
   height: 100vh;
-  /* margin-bottom: 50px; */
 `;
 
 const tourSectionStyle = css`
   display: flex;
-  /* flex-direction: column; */
-  /* justify-content: center;
-  align-content: center;
-  align-items: center;
-  text-align: center; */
-
-  /* width: 50vw; */
   margin-top: 10px;
   color: white;
 
@@ -81,34 +59,29 @@ const headerFontStyle = css`
 export default function SingleTour(props) {
   const [addedTourArray, setAddedTourArray] = useState(props.addedTour);
 
-  // const currentTourObject = addedTourArray.find(
-  //   (cookieObject) => cookieObject.id === props.tour.id,
-  // );
-
-  // function addToCart(id) {
-  //   console.log(`set the cookie to go to cart ${id}`);
-
-  //   Cookies.set('test');
-  // }
-
-  function addingATour() {
+  function addingATour(id) {
     // get the value of the cookie
     const cookieValue = getParsedCookie('addedTour') || [];
-
+    console.log(cookieValue);
+    const existIdOnArray = cookieValue.some((cookieObject) => {
+      console.log(cookieObject.id);
+      return cookieObject.id === id;
+    });
+    console.log(existIdOnArray);
     // update the cookie
-    const newCookie = cookieValue.push({ id: props.tour.id, added: 1 });
-    // let newCookie;
-
+    let newCookie;
     if (existIdOnArray) {
-      newCookie = cookieValue.filter((cookieObject) => {
-        return cookieObject.id !== id;
+      const existingTour = cookieValue.find((foodTour) => {
+        return foodTour.id === id;
       });
+      existingTour.added += 1;
+      newCookie = cookieValue;
     } else {
-      newCookie = [...cookieValue, { id: id, added: 0 }];
+      newCookie = [...cookieValue, { id: id, added: 1 }];
     }
 
     setAddedTourArray(newCookie);
-    setParsedCookie('addedTour', cookieValue);
+    setParsedCookie('addedTour', newCookie);
   }
 
   return (

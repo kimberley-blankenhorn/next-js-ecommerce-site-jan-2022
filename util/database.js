@@ -32,3 +32,10 @@ export async function readTour(id) {
   `;
   return tour;
 }
+
+// export async function getTours() {
+//   const tours = await sql<Tour[]>`
+//   SELECT * FROM tours;
+//   `;
+//   return tours;
+// }
